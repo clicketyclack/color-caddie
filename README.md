@@ -1,2 +1,2 @@
 # color-caddie
-Help you analyse images in a color context.
+Helps you read the field and select your tools, but in a coloring context.
