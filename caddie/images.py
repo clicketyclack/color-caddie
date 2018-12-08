@@ -22,6 +22,7 @@ import os
 import PIL.Image
 import PIL.ImageFilter
 from colormath.color_objects import sRGBColor
+import tesserocr
 
 class CaddieImage:
     def __init__(self, filename):
@@ -66,3 +67,9 @@ class CaddieImage:
         center = (scratch.size[0]/2, (scratch.size[1]/2))
         center_pixel = scratch.getpixel(center)
         return sRGBColor(center_pixel[0], center_pixel[1], center_pixel[2], False)
+
+    def guess_colorname(self):
+        """
+        Simple extraction of swatch color name.
+        """
+        return tesserocr.image_to_text(self._image)

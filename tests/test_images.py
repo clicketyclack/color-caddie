@@ -91,6 +91,11 @@ class TestImageReader(unittest.TestCase):
         delta_p84 = delta_e_cie2000(convert_color(color_p84, LabColor), convert_color(expected_p84, LabColor))
         self.assertTrue(delta_p84 < 1.5, "Can extract P84 color.")
 
+    def test_swatch_guess_name(self):
+        filename = os.path.join(ROOT_PATH, 'media/single_tile_BG000.png')
+        swatch_bg000 = CaddieImage(filename)
+        swatch_bg000.load()
+        self.assertTrue('000' in swatch_bg000.guess_colorname())
 
 
 if __name__ == '__main__':
