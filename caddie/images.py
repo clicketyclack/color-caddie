@@ -56,6 +56,14 @@ class CaddieImage:
         toreturn._image = self._image.crop((0.2 * width, 0.3 * height, 0.8 * width, 0.7 * height))
         return toreturn
 
+class SingleSwatch(CaddieImage):
+
+    def __init__(self, filename):
+        """
+        A single swatched tile.
+        """
+        super(SingleSwatch, self).__init__(filename)
+
     def get_swatch_color(self):
         """
         Return the color for a color swatch.
@@ -73,3 +81,17 @@ class CaddieImage:
         Simple extraction of swatch color name.
         """
         return tesserocr.image_to_text(self._image)
+
+class MultiSwatch(CaddieImage):
+
+    def __init__(self, filename):
+        """
+        A sheet of multiple swatches.
+        """
+        super(MultiSwatch, self).__init__(filename)
+
+    def split_swatches(self, count_horiz, count_vert):
+        """
+        Split a sheet multi-swatch into
+        """
+        raise Exception("Not implemented.")

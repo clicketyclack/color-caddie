@@ -35,6 +35,8 @@ from colormath.color_conversions import convert_color
 sys.path.append('../')
 
 from caddie.images import CaddieImage
+from caddie.images import SingleSwatch
+from caddie.images import MultiSwatch
 from caddie import ROOT_PATH
 
 class TestImageReader(unittest.TestCase):
@@ -68,16 +70,21 @@ class TestImageReader(unittest.TestCase):
         self.assertTrue(size_post > 100, "Successfully crop an image, but not the entire thing.")
 
 
+class TestSingleSwatch(unittest.TestCase):
+    """
+    Verify SingleSwatch class.
+    """
+
     def test_swatch_color(self):
         """
         Verify that we can extract the color from a color swatch.
         """
         filename = os.path.join(ROOT_PATH, 'media/single_tile_BG53.png')
-        swatch_bg53 = CaddieImage(filename)
+        swatch_bg53 = SingleSwatch(filename)
         swatch_bg53.load()
 
         filename = os.path.join(ROOT_PATH, 'media/single_tile_P84.png')
-        swatch_p84 = CaddieImage(filename)
+        swatch_p84 = SingleSwatch(filename)
         swatch_p84.load()
 
 
@@ -93,7 +100,7 @@ class TestImageReader(unittest.TestCase):
 
     def test_swatch_guess_name(self):
         filename = os.path.join(ROOT_PATH, 'media/single_tile_BG000.png')
-        swatch_bg000 = CaddieImage(filename)
+        swatch_bg000 = SingleSwatch(filename)
         swatch_bg000.load()
         self.assertTrue('000' in swatch_bg000.guess_colorname())
 
