@@ -99,11 +99,24 @@ class TestSingleSwatch(unittest.TestCase):
         self.assertTrue(delta_p84 < 1.5, "Can extract P84 color.")
 
     def test_swatch_guess_name(self):
+        """
+        Verify OCR for swatchnames.
+        """
         filename = os.path.join(ROOT_PATH, 'media/single_tile_BG000.png')
         swatch_bg000 = SingleSwatch(filename)
         swatch_bg000.load()
         self.assertTrue('000' in swatch_bg000.guess_colorname())
 
+    def test_generate_swatch(self):
+        """
+        Verify that we can generate a clean swatch.
+
+        Currently writes result to /tmp for manual verification.
+        Unit test will only fail on exceptions.
+        """
+        clean_swatch = SingleSwatch.generate_swatch(swatch_name='Red', swatch_rgb=(230,20,20))
+        guessed_colorname = clean_swatch.guess_colorname()
+        # self.assertTrue('Red' == guessed_colorname, "From a generated swatch, expect colorname 'Red', got '%s'" % guessed_colorname)
 
 if __name__ == '__main__':
     unittest.main()

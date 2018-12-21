@@ -24,12 +24,18 @@ import PIL.ImageFilter
 from colormath.color_objects import sRGBColor
 import tesserocr
 
+from PIL import ImageFont, ImageDraw
+
+
 class CaddieImage:
     def __init__(self, filename):
         """
         Handle for image specified by filename.
         """
-        self._filename = os.path.abspath(filename)
+        self._filename = filename
+        if self._filename is not None:
+            self._filename = os.path.abspath(self._filename)
+
         self._image = None
 
 
@@ -56,6 +62,7 @@ class CaddieImage:
         toreturn._image = self._image.crop((0.2 * width, 0.3 * height, 0.8 * width, 0.7 * height))
         return toreturn
 
+
 class SingleSwatch(CaddieImage):
 
     def __init__(self, filename):
@@ -81,6 +88,44 @@ class SingleSwatch(CaddieImage):
         Simple extraction of swatch color name.
         """
         return tesserocr.image_to_text(self._image)
+
+
+    @classmethod
+    def generate_swatch(cls, swatch_name, swatch_rgb):
+        """
+        Generate a tidy-looking swatch.
+        """
+        mode = 'RGB'
+        img_w = 200
+        img_h = 100
+
+        bgcolor = 'grey'
+
+        canvas = PIL.Image.new(mode, (img_w, img_h), bgcolor)
+
+        noto = ImageFont.truetype('/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf', 24)
+        drawer = ImageDraw.Draw(canvas)
+
+        fontcolor = (222,222,222)
+
+        label_w, label_h = drawer.textsize(swatch_name, noto)
+
+        drawer.text((img_w/2 - label_w/2, 8), swatch_name, fontcolor, font=noto)
+        drawer.rectangle([(16, 16 + label_h), (img_w-16, img_h-16)], fill=swatch_rgb)
+
+        canvas.save('/tmp/swatch_%s.png' % swatch_name)
+
+        toreturn = cls.from_image(canvas)
+        return toreturn
+
+    @staticmethod
+    def from_image(image):
+        """
+        Factory : Create a SingleSwatch from an image.
+        """
+        toreturn = SingleSwatch(None)
+        toreturn._image = image
+        return toreturn
 
 class MultiSwatch(CaddieImage):
 
