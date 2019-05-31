@@ -32,7 +32,8 @@ from server import CaddieServer
 from caddie import ROOT_PATH
 
 class TestServerUpload(helper.CPWebCase):
-
+    
+    @staticmethod
     def setup_server():
         cherrypy.tree.mount(CaddieServer())
 

@@ -32,7 +32,7 @@ class CaddieServer(object):
         """
         Static index page.
         """
-        return "Caddie index."
+        return "Caddie index. <br><a href='./upload_image'>Upload image</a>"
 
     @cherrypy.expose
     def upload_image(self, file=None):
@@ -78,3 +78,10 @@ class CaddieServer(object):
     </HTML>
     """
             return default_response
+
+
+    @cherrypy.expose
+    def tidy_swatch(self, swatchname, file=None):
+        """
+        Upload an swatch and tidy it up. Some restrictions apply.
+        """

@@ -70,6 +70,13 @@ class TestImageReader(unittest.TestCase):
         self.assertTrue(size_post > 100, "Successfully crop an image, but not the entire thing.")
 
 
+    def extract_value(self, value_levels=10):
+        """
+        Convert RGB to HSL, then set RGB = value, binned in 10 levels.
+        """
+        return None
+
+
 class TestSingleSwatch(unittest.TestCase):
     """
     Verify SingleSwatch class.
