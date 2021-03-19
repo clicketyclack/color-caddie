@@ -4,6 +4,6 @@ decorator==4.3.0
 networkx==2.2
 nose2==0.8.0
 numpy==1.15.4
-pillow==7.1.0
+pillow==8.1.1
 six==1.11.0
 tesserocr==2.2.2
